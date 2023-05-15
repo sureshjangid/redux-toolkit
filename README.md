@@ -5,6 +5,7 @@ This is a CRUD (Create, Read, Update, Delete) application built with React, Redu
 ## Features
 
 - Search: Filter the data based on a search query.
+- Add: Add user info.
 - Edit: Modify the data items.
 - Delete: Remove a data item from the collection.
 - View All Data: Display all the data items in a list.
