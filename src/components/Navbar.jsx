@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { searchUser } from "./redux/postslice";
 
 const Navbar = () => {
+  const [search, setSearchUser] = useState("");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(searchUser(search));
+  }, [search]);
   return (
     <div>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -81,10 +90,8 @@ const Navbar = () => {
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                onChange={(e) => setSearchUser(e.target.value)}
               />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
             </form>
           </div>
         </div>

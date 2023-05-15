@@ -7,6 +7,7 @@ const Edit = () => {
   const [infoData, setInfoData] = useState("");
   const { id } = useParams();
   const { user } = useSelector((state) => state?.app);
+  console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const singleData = user.filter((ele) => ele.id === id);

@@ -68,6 +68,12 @@ const postSlice = createSlice({
     loading: false,
     user: [],
     error: null,
+    searchUser: [],
+  },
+  reducers: {
+    searchUser: (state, action) => {
+      state.searchUser = action.payload;
+    },
   },
 
   extraReducers: {
@@ -98,9 +104,10 @@ const postSlice = createSlice({
       state.loading = true;
     },
     [updateUser.fulfilled]: (state, action) => {
+      console.log(action,'action');
       state.loading = false;
       state.user = state.user.map((ele) => {
-        ele.id === action.payload.id ? action.payload : ele;
+        return ele.id === action.payload.id ? action.payload : ele;
       });
     },
     [updateUser.rejected]: (state, action) => {
@@ -122,3 +129,4 @@ const postSlice = createSlice({
 });
 
 export default postSlice.reducer;
+export const { searchUser } = postSlice.actions;

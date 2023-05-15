@@ -7,11 +7,11 @@ import { NavLink } from "react-router-dom";
 const Read = () => {
   const [open, setOpne] = useState(false);
   const [id, setId] = useState("");
-  const readAllData = useSelector((state) => state?.app?.user);
+  const { user, searchUser } = useSelector((state) => state?.app);
   const dispatch = useDispatch();
 
   useEffect(() => {
-     dispatch(showUser());
+    dispatch(showUser());
   }, []);
   return (
     <div>
@@ -26,32 +26,46 @@ const Read = () => {
               </thead>
               <tbody>
                 <tr>
-                  {readAllData.map((item) => {
-                    return (
-                      <tr>
-                        <td scope="col">{item?.name}</td>
-                        <td scope="col">{item?.email}</td>
-                        <td scope="col">{item?.age}</td>
-                        <td scope="col">
-                          <NavLink to={`/edit/${item?.id}`}>Edit</NavLink>
-                        </td>
-                        <td scope="col">
-                          <button
-                            onClick={() => dispatch(deleteUser(item?.id))}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                        <td scope="col">
-                          <button
-                            onClick={() => [setOpne(true), setId(item?.id)]}
-                          >
-                            View
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  {user &&
+                    user
+                      .filter((ele) => {
+                        if (searchUser === 0) {
+                          return ele;
+                        } else {
+                          return (
+                            ele?.name
+                              .toLowerCase()
+                              .includes(searchUser.toLowerCase()) ||
+                            ele?.email.includes(searchUser.toLowerCase())
+                          );
+                        }
+                      })
+                      .map((item) => {
+                        return (
+                          <tr>
+                            <td scope="col">{item?.name}</td>
+                            <td scope="col">{item?.email}</td>
+                            <td scope="col">{item?.age}</td>
+                            <td scope="col">
+                              <NavLink to={`/edit/${item?.id}`}>Edit</NavLink>
+                            </td>
+                            <td scope="col">
+                              <button
+                                onClick={() => dispatch(deleteUser(item?.id))}
+                              >
+                                Delete
+                              </button>
+                            </td>
+                            <td scope="col">
+                              <button
+                                onClick={() => [setOpne(true), setId(item?.id)]}
+                              >
+                                View
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                 </tr>
               </tbody>
             </table>
